@@ -1,3 +1,8 @@
+<style type="text/css">
+    table.dataTable tbody td.select-checkbox:before{
+        border: none !important;
+    }
+</style>
 @extends('layouts.admin')
 @section('content')
 <div class="card">
@@ -11,21 +16,25 @@
                     <table class=" table table-bordered table-striped table-hover datatable datatable-User">
                         <thead>
                             <tr>
-                                <th width="10">
+                                {{-- <th width="10">
 
-                                </th>
+                                </th> --}}
+                                
                                 <th>
-                                    {{ trans('cruds.actions') }}
+                                    {{ trans('cruds.user_name') }}
                                 </th>
                                 
                                 <th>
                                     {{ trans('cruds.user_code') }}
                                 </th>
-                                <th>
+                                {{-- <th>
                                     {{ trans('cruds.user_role') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.acl') }}
+                                </th> --}}
+                                <th>
+                                    {{ trans('cruds.designation') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.entry_office') }}
@@ -33,26 +42,23 @@
                                 <th>
                                     {{ trans('cruds.section') }}
                                 </th>
-                                <th>
-                                    {{ trans('cruds.user_name') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.designation') }}
-                                </th>
-                                <th>
+                                {{-- <th>
                                     {{ trans('cruds.epf_no') }}
-                                </th>
+                                </th> --}}
                                 <th>
                                     {{ trans('cruds.mobile_no') }}
                                 </th>
-                                <th>
+                                {{-- <th>
                                     {{ trans('cruds.email') }}
-                                </th>
-                                <th>
+                                </th> --}}
+                                {{-- <th>
                                     {{ trans('cruds.profile_photo') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.signature') }}
+                                </th> --}}
+                                <th>
+                                    {{ trans('cruds.actions') }}
                                 </th>
                             </tr>
                         </thead>
@@ -63,9 +69,54 @@
                                 $acls = \App\Branch::whereIn('id',$acl)->get();
                             @endphp
                             <tr data-entry-id="{{ $user->id }}">
-                                <td>
+                                {{-- <td>
 
+                                </td> --}}
+                                <td>
+                                    {{ $user->name ?? '' }}
                                 </td>
+                                
+                                <td>
+                                    {{ $user->user_code ?? '' }}
+                                </td>
+                                {{-- <td>
+                                    {{isset($user->role)?$user->role->title:''}}
+                                </td>
+                                <td>
+                                   @foreach ($acls as $office)
+                                       {{ $office->short_name }} <br>
+                                   @endforeach
+                                </td> --}}
+                                <td>
+                                    {{isset($user->designation)?$user->designation->designation_name:''}}
+                                </td>
+                                <td>
+                                    {{isset($user->office)?$user->office->short_name:''}}
+                                </td>
+                                <td>
+                                    {{isset($user->section)?$user->section->section_name:''}}
+                                </td>
+                                {{-- <td>
+                                    {{ $user->epf_no ?? '' }}
+                                </td> --}}
+                                <td>
+                                    {{ $user->mobile_no ?? '' }}
+                                </td>
+                                {{-- <td>
+                                    {{ $user->email ?? '' }}
+                                </td> --}}
+                                {{-- <td>
+                                    @if (checkExist($user->photo))
+                                    <img alt="Image" class="img-thumbnail" style="width: 90px;height:90px;"
+                                    src="{{asset($user->photo)}}">
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (checkExist($user->signature))
+                                    <img alt="Image" class="img-thumbnail" style="width: 90px;height:90px;"
+                                    src="{{asset($user->signature)}}">
+                                    @endif
+                                </td> --}}
                                 <td>
                                     @if(show())
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">
@@ -86,51 +137,6 @@
                                         <button type="submit" class="btn btn-xs btn-danger">
                                             <i class="fas fa-trash"></i></button>
                                     </form>
-                                    @endif
-                                </td>
-                                
-                                <td>
-                                    {{ $user->user_code ?? '' }}
-                                </td>
-                                <td>
-                                    {{isset($user->role)?$user->role->title:''}}
-                                </td>
-                                <td>
-                                   @foreach ($acls as $office)
-                                       {{ $office->short_name }} <br>
-                                   @endforeach
-                                </td>
-                                <td>
-                                    {{isset($user->office)?$user->office->short_name:''}}
-                                </td>
-                                <td>
-                                    {{isset($user->section)?$user->section->section_name:''}}
-                                </td>
-                                <td>
-                                    {{ $user->name ?? '' }}
-                                </td>
-                                <td>
-                                    {{isset($user->designation)?$user->designation->designation_name:''}}
-                                </td>
-                                <td>
-                                    {{ $user->epf_no ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $user->mobile_no ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $user->email ?? '' }}
-                                </td>
-                                <td>
-                                    @if (checkExist($user->photo))
-                                    <img alt="Image" class="img-thumbnail" style="width: 90px;height:90px;"
-                                    src="{{asset($user->photo)}}">
-                                    @endif
-                                </td>
-                                <td>
-                                    @if (checkExist($user->signature))
-                                    <img alt="Image" class="img-thumbnail" style="width: 90px;height:90px;"
-                                    src="{{asset($user->signature)}}">
                                     @endif
                                 </td>
                             </tr>
